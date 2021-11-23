@@ -25,7 +25,7 @@ public class InventoryIO
          try (var br = new BufferedReader(fr)) {
             var ln = br.readLine();
 
-            while (ln != null) {
+            do {
                sb.append(ln);
                sb.append(System.lineSeparator());
                ln = br.readLine();
@@ -35,7 +35,7 @@ public class InventoryIO
                var sort = st.split(",");
                this.saveRecord[this.counter] = new CandyStoreItem(sort[0], sort[1], sort[2], sort[3], sort[4]);
                this.counter++;
-            }
+            } while (ln != null);
          }
       } catch (Exception e) {
          e.printStackTrace();
@@ -52,13 +52,13 @@ public class InventoryIO
       try (var fw = new FileWriter(backFile)) {
          // Create our buffered reader, and perform our writes.
          try (var bw = new BufferedWriter(fw)) {
-            int i = 1;
-
-            while (this.saveRecord != null) {
-               store = this.saveRecord[i].getProduct();
-               bw.write(store);
-
-               i++;
+            for (var item : this.saveRecord) {
+               if (item == null)
+                  break;
+               else {
+                  store = item.getProduct();
+                  bw.write(store);
+               }
             }
          }
       } catch (Exception e) {

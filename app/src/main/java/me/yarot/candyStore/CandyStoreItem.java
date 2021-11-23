@@ -10,11 +10,11 @@ public class CandyStoreItem
 
    public CandyStoreItem(String product, String size, String packaging, String noInStock, String custCost)
    {
-      setProduct(product);
-      setSize(size);
-      setPackaging(packaging);
-      setNoInStock(Integer.parseInt(noInStock.trim()));
-      setCustCost(Double.parseDouble(custCost.trim()));
+      this.setProduct(product);
+      this.setSize(size);
+      this.setPackaging(packaging);
+      this.setNoInStock(Integer.parseInt(noInStock.trim()));
+      this.setCustCost(Double.parseDouble(custCost.trim()));
    }
 
    public CandyStoreItem()

@@ -16,7 +16,7 @@ public class InvTest {
    @Test public void can_read()
    {
       var tested_class = new InventoryIO();
-      var file = new File("OldTimeCandy.txt");
+      var file = new File("OldTimeCandyTest.txt");
       tested_class.fileReadMethod(file);
 
       assertNotNull(tested_class.getCandyRecord());
