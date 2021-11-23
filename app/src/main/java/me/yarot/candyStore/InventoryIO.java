@@ -2,28 +2,26 @@ package me.yarot.candyStore;
 
 import java.io.*;
 
-public class InventoryIO
-{
+public class InventoryIO {
    private CandyStoreItem[] saveObjRecord;
    private CandyStoreItem[] saveRecord;
    private int counter;
 
-   public InventoryIO()
-   {
+   public InventoryIO() {
       counter = 0;
       saveObjRecord = new CandyStoreItem[20];
       saveRecord = new CandyStoreItem[20];
    }
 
    // Read from the specified file into our `saveRecord`.
-   public void fileReadMethod(File currFile)
-   {
+   public void fileReadMethod(File currFile) {
       var st = new String();
       var sb = new StringBuilder();
 
       try (var fr = new FileReader(currFile)) {
          try (var br = new BufferedReader(fr)) {
             var ln = br.readLine();
+            int in = 0;
 
             do {
                sb.append(ln);
@@ -33,9 +31,9 @@ public class InventoryIO
                st = sb.toString();
 
                var sort = st.split(",");
-               this.saveRecord[this.counter] = new CandyStoreItem(sort[0], sort[1], sort[2], sort[3], sort[4]);
-               this.counter++;
-            } while (ln != null);
+               this.saveRecord[in] = new CandyStoreItem(sort[0], sort[1], sort[2], sort[3], sort[4]);
+               in++;
+            } while (in < 6);
          }
       } catch (Exception e) {
          e.printStackTrace();
@@ -52,13 +50,27 @@ public class InventoryIO
       try (var fw = new FileWriter(backFile)) {
          // Create our buffered reader, and perform our writes.
          try (var bw = new BufferedWriter(fw)) {
+            var sb = new StringBuilder();
+
             for (var item : this.saveRecord) {
-               if (item == null)
-                  break;
-               else {
-                  store = item.getProduct();
-                  bw.write(store);
-               }
+               // Product.
+               sb.append(item.getProduct());
+               sb.append(System.lineSeparator());
+               // Item size.
+               sb.append(item.getSize());
+               sb.append(System.lineSeparator());
+               // Item packaging.
+               sb.append(item.getPackaging());
+               sb.append(System.lineSeparator());
+               // Number of item in stock.
+               sb.append(item.getNoInStock());
+               sb.append(System.lineSeparator());
+               // Item cost.
+               sb.append(item.getCustCost());
+               sb.append(System.lineSeparator());
+
+               store = sb.toString();
+               bw.write(store);
             }
          }
       } catch (Exception e) {
@@ -86,8 +98,9 @@ public class InventoryIO
             var ln = ois.readLine();
             var sb = new StringBuilder();
             var st = new String();
+            int in = 0;
 
-            while (ln != null) {
+            while (in < 6) {
                sb.append(ln);
                sb.append(System.lineSeparator());
                ln = ois.readLine();
@@ -95,8 +108,8 @@ public class InventoryIO
                st = sb.toString();
 
                var sort = st.split(",");
-               this.saveObjRecord[this.counter] = new CandyStoreItem(sort[0], sort[1], sort[2], sort[3], sort[4]);
-               this.counter++;
+               this.saveObjRecord[in] = new CandyStoreItem(sort[0], sort[1], sort[2], sort[3], sort[4]);
+               in++;
             }
          }
       } catch (Exception e) {
